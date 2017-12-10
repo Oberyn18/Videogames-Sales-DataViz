@@ -2,6 +2,7 @@
 import numpy as np
 import pandas as pd 
 
+
 ########### DATA PRE-PROCESSING ##########
 # Import data using pandas
 data = pd.read_csv("vgsales.csv")
@@ -18,6 +19,9 @@ data.Year = data.Year.astype(int)
 data.to_csv('data.csv', encoding='utf-8', index=False)
 
 ###################  PCA ##################
+# Save data variable with all the attributes
+completeData = data.copy(deep=True)
+
 # Discard nominal attributes on dataset for PCA
 data.drop(['Rank', 'Name', 'Platform', 'Year', 'Genre', 'Publisher'], axis=1, inplace=True)
 
@@ -30,7 +34,7 @@ for i in range(M.shape[1]):
         M[:, i]=0.
 
 # Number of desired dimensions
-final_dimensions = 3
+final_dimensions = 2
 
 # Covariance matrix:
 C = np.cov(M.T, bias=1)
@@ -48,7 +52,6 @@ final_data = np.dot(M,feature_vec)
 # Separate the three principal components for plotting
 x = final_data[:,0]
 y = final_data[:,1]
-z = final_data[:,2]
 
 # To understand how the measurements combine into the principal components
 eig_values_ = 100*eig_values/np.sum(np.abs(eig_values))
@@ -57,18 +60,27 @@ feature_vec_ = np.array([100*feature_vec[:,i]/np.abs(feature_vec[:,i]).sum() for
 
 # PLOTS
 import matplotlib.pyplot as plt
-from mpl_toolkits.mplot3d import axes3d, Axes3D
+from scipy.interpolate import griddata
 import pylab as p
+import plotly as py
+import plotly.graph_objs as go
+
+# Heatmap of the covariance matrix
+trace = go.Heatmap(z=C.reshape(5,5),
+                   x=["NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales", "Global_Sales"],
+                   y=["NA_Sales", "EU_Sales", "JP_Sales", "Other_Sales", "Global_Sales"])
+heatmap = [trace]
+# py.offline.plot(heatmap)
 
 # Show the % of dispersion of each components by looking at the eigen values sorted in descending order
 aux_x = [0,1,2,3,4]
 fig, ax = plt.subplots()
 bars = ax.bar(aux_x, eig_values_, color="darkblue", width=0.9)
-ax.set_xlabel('Principal Component')
-ax.set_ylabel("Dispersion's Percentage")
-ax.set_title("Principal Component's Dispersion Percentage")
+ax.set_xlabel('Componente Principal')
+ax.set_ylabel("Porcentagem de dispersao")
+ax.set_title("Porcentagems de dispersao das Componentes Principais")
 ax.set_xticks(np.add(aux_x,(0.45/10)))
-ax.set_xticklabels(('PC1', 'PC2', 'PC3', 'PC4', 'PC5'))
+ax.set_xticklabels(('CP1', 'CP2', 'CP3', 'CP4', 'CP5'))
 
 def autolabel(bars):
     for bar in bars:
@@ -84,46 +96,35 @@ properties = ['NA_Sales', 'EU_Sales', 'JP_Sales', 'Other_Sales', 'Global_Sales']
 fig = plt.figure()
 pc1 = eig_vectors[:,0]  
 pc2 = eig_vectors[:,1]
-pc3 = eig_vectors[:,3]
 ax1 = fig.add_subplot(111)
-ax1.set_title("Eigen Vectors 2D")
+ax1.set_title("Autovetores")
 ax1.plot(pc1, pc2, "b+", color="blue", markeredgecolor="black", ms=8)
-ax1.set_xlabel('Principal Component 1')
-ax1.set_ylabel('Principal Component 2')
+ax1.set_xlabel('Primeira Componente Principal')
+ax1.set_ylabel('Segunda Componente Principal')
 # Add the properties labels
 for i, label in enumerate(properties):
     ax1.annotate(label, (pc1[i]+0.007,pc2[i]+0.002), size=9.5)
 
 
-fig = plt.figure()
-ax1 = fig.add_subplot(111, projection='3d')
-ax1.set_title("Eigen Vectors 3D")
-ax1.plot(pc1, pc2, pc3, "bo", color="blue", markeredgecolor="black", ms=8)
-ax1.set_xlabel('PC 1')
-ax1.set_ylabel('PC 2')
-ax1.set_zlabel('PC 3')
-
 # Plot the final data in two dimensions
 fig = plt.figure()
-ax1 = fig.add_subplot(211)
-ax1.set_title("Final data 2D")
+ax1 = fig.add_subplot(111)
 ax1.plot(x, y, "ro", color="blue", markeredgecolor='black', ms=4)
-
-# Plot the final data in three dimensions
-ax2 = fig.add_subplot(212, projection='3d')
-ax2.set_title("Final data 3D")
-ax2.plot(x, y, z, "ro", color="blue", markeredgecolor='black', ms=4)
-
 plt.tight_layout()
 fig = plt.gcf()
 plt.show()
 
-# Save the figure of the 2D Final data
-p.plot(x, y, "ro", color="blue", markeredgecolor='black', ms=4)
-p.title("Final PCA Data")
-p.xlabel('First component')
-p.ylabel('Second component')
-p.savefig("pcaScatterPlot2D.png")
+# Plot again with the name of the videogames to see which of them are OUTLIERS
+fig = plt.figure()
+ax1 = fig.add_subplot(111)
+ax1.plot(x, y, "ro", color="blue", markeredgecolor='black', ms=4)
+for i, label in enumerate(np.array(completeData.Name.values)):
+    ax1.annotate(label, (x[i], y[i]))
+plt.tight_layout()
+fig = plt.gcf()
+# Due to the time required to load all the ~16200 elements, just uncomment the next line when required.
+# plt.show()
+
 
 
 
