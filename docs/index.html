@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt">
+    <head>
+        <meta charset="utf-8">
+        <title>Video Games Sales</title>
+        <link rel="stylesheet" href="css/main.css">
+        <script src="https://use.fontawesome.com/c8f3341d6c.js"></script>
+    </head>
+    <body>
+        <h1 class="main-title">Vendas de Videogames</h1>
+
+        <div class="container">
+            <div id="world-map">
+                <h3 id="world-title">As quatro principais regiões de vendas videogames no mundo</h3>
+                <a id="world-info" data-id="veil-world"><i class="fa fa-info"></i></a>
+
+                <div id="veil-world" class="veil">
+                    <a data-id="veil-world" data-aria="world-info"><i class="fa fa-times"></i></a>
+
+                    <p class="tooltip">O mapa contem o mundo inteiro dividido em 4 regiões, onde foram feitas vendas de videogames. Cada região tem uma cor que o diferença do resto.</p>
+
+                    <p class="tooltip tooltip-interactive">Você pode aumentar ou diminuir o zoom, ou arrastar o mapa para encontrar uma região ou país específico. Também pode fazer clic para selecionar uma região e mudar os dados das outras representações.</p>
+                </div>
+
+                <svg></svg>
+            </div>
+
+            <div id="stream-graph">
+                <h3 id="stream-title">Evolução das vendas de videogames em cada região ao longo dos anos</h3>
+                <a id="stream-info" data-id="veil-stream"><i class="fa fa-info"></i></a>
+
+                <div id="veil-stream" class="veil">
+                    <a data-id="veil-stream" data-aria="stream-info"><i class="fa fa-times"></i></a>
+
+                    <p class="tooltip">Este gráfico de fluxo (streamgraph) mostra as vendas de videogames através dos anos para cada região, a altura de cada fluxo indica a quantidade de vendas. Se alguma das regioes do mapa está selecionada, esta visualização mostrará as plataformas para as quais os videogames foram vendidos ao longo dos anos.</p>
+
+                    <p class="tooltip tooltip-interactive">Você pode pasar o mouse por acima de algum fluxo para olhar a quantidade de vendas para uma plataforma específica em um ano específico.</p>
+                </div>
+
+                <svg></svg>
+            </div>
+
+            <div id="grouped-horizontal-bar-chart">
+                <h3 id="grouped-title">Gêneros de videogames vendidos em cada regiao</h3>
+                <a id="grouped-info" data-id="veil-grouped"><i class="fa fa-info"></i></a>
+
+                <div id="veil-grouped" class="veil">
+                    <a data-id="veil-grouped" data-aria="grouped-info"><i class="fa fa-times"></i></a>
+
+                    <p class="tooltip">O gráfico de barras mostra as vendas de videogames categorizadas por gêneros. Se alguma das regiões está selecionada no mapa, uma filtragem é aplicada sobre o gráfico para mostrar somente a informacao da região selecionada.</p>
+
+                    <p class="tooltip tooltip-interactive">Você pode pasar o mouse por acima de alguma barra para olhar o número exato de vendas do gênero de videogame correspondente.</p>
+                </div>
+
+                <svg></svg>
+            </div>
+
+            <div id="serie-line-chart">
+                <h3 id="serie-title">Vendas de videogames nas quatro regiões ao longo dos anos</h3>
+                <a id="serie-info" data-id="veil-serie"><i class="fa fa-info"></i></a>
+
+                <div id="veil-serie" class="veil">
+                    <a data-id="veil-serie" data-aria="serie-info"><i class="fa fa-times"></i></a>
+
+                    <p class="tooltip">O gráfico de série mostra as vendas de cada região através dos anos. Se alguma das regioes está selecionada no mapa, a linha da regiao correspondente neste gráfico é também selecionada.</p>
+                </div>
+
+                <svg></svg>
+            </div>
+        </div>
+
+        <script src="https://d3js.org/d3.v4.min.js"></script>
+        <script src="https://d3js.org/topojson.v1.min.js"></script>
+        <script src="js/graphics/WorldMap.js" charset="utf-8"></script>
+        <script src="js/graphics/StreamGraph.js" charset="utf-8"></script>
+        <script src="js/graphics/GroupedHorizontalBarChart.js" charset="utf-8"></script>
+        <script src="js/graphics/MultiSeriesLineChart.js" charset="utf-8"></script>
+        <script src="js/main.js" charset="utf-8"></script>
+    </body>
+</html>

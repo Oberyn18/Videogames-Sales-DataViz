@@ -1,0 +1,137 @@
+@import "./assets/grid.css";
+
+* { box-sizing: border-box; }
+
+body {
+    display: flex;
+    flex-direction: column;
+    font-family: sans-serif;
+    margin: 0;
+    min-height: 100vh;
+}
+
+svg {
+    height: calc(100% - 27px);
+    min-height: 200px;
+    width: 100%;
+}
+
+div {
+    position: relative;
+    padding-bottom: 10px;
+}
+
+h3 {
+    display: inline-block;
+    font-size: 20px;
+    margin: 0;
+    padding: 5px 10px;
+}
+
+a {
+    background: rgb(14, 78, 138);
+    border-radius: 100%;
+    cursor: pointer;
+    height: 30px;
+    line-height: 30px;
+    opacity: 1;
+    position: absolute;
+    right: -15px;
+    text-align: center;
+    top: -15px;
+    width: 30px;
+
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+
+a.view { opacity: 0; }
+
+i {
+    color: white;
+    font-size: 18px !important;
+}
+
+.veil {
+    background: rgb(32, 31, 31);
+    color: white;
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    justify-content: center;
+    left: 0;
+    opacity: .9;
+    position: absolute;
+    padding: 0 25px;
+    top: 0;
+    transform: scaleY(0);
+    width: 100%;
+
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+
+.veil.view { transform: scaleY(1); }
+
+.veil a {
+    background: transparent;
+    color: rgb(190, 184, 184);
+    right: 5px;
+    top: 5px;
+}
+
+.container > div { box-shadow: 0px 0px 8px -1px rgba(0,0,0,0.39); }
+
+.main-title {
+    margin-top: 2rem;
+    text-align: center;
+}
+
+.tooltip { font-size: 20px; }
+
+.tooltip-interactive { font-weight: bold; }
+
+.countries path {
+    stroke: white;
+    stroke-width: .5;
+}
+
+path {
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+
+path.clicked { stroke-width: 1px; }
+
+path.line.clicked { stroke-width: 3px; }
+
+path.not-clicked {
+    opacity: .5;
+    stroke: rgb(199, 199, 199) !important;
+}
+
+path.line.not-clicked { stroke-width: 1px; }
+
+path.moused { stroke: 1px; }
+
+path.not-moused {
+    fill: rgb(233, 231, 231) !important;
+    opacity: .8;
+    stroke: rgb(199, 199, 199);
+}
+
+.ATA { opacity: .3; }
+
+.line {
+    fill: none !important;
+    stroke: steelblue;
+    stroke-width: 5px;
+
+    -webkit-transition: .5s ease;
+    transition: .5s ease;
+}
+
+.tick text {
+    font-size: 14px;
+    font-weight: bold;
+}
