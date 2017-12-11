@@ -91,7 +91,7 @@ class WorldMap {
                 if (!b.empty()) b.nodes().map(d => d.classList[0]).forEach(d => { d3.selectAll(`.country.${d}`).classed('not-clicked', true) })
             })
             .on('click', () => {
-                if (d3.event.path.length == 7 || d3.event.srcElement.classList.contains('ATA')) {
+                if (!d3.select(d3.event.toElement).classed('country') || d3.event.srcElement.classList.contains('ATA')) {
                     d3.selectAll('.country').classed('clicked not-clicked', false)
 
                     groupedData['element'].render(groupedData['data'], groupedData['array'], countries)
